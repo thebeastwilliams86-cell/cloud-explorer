@@ -1,4 +1,4 @@
-// 🔹 Firebase config and initialization
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCKN-kgDd6cEfGAXBJSy1XpGZeMMtXIA8I",
   authDomain: "cloud-explorer-dc32c.firebaseapp.com",
@@ -11,11 +11,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-// 🔹 Wait for the page to load
 document.addEventListener("DOMContentLoaded", () => {
-  // 🔸 Login form handler (for login.html)
+  // 🔹 Login handler
   const loginForm = document.getElementById("login-form");
-
   if (loginForm) {
     loginForm.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -23,19 +21,59 @@ document.addEventListener("DOMContentLoaded", () => {
       const password = e.target[1].value;
 
       auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          alert(`Welcome, ${user.email}`);
+        .then(userCredential => {
+          alert(`Welcome, ${userCredential.user.email}`);
         })
-        .catch((error) => {
+        .catch(error => {
           alert(`Login failed: ${error.message}`);
         });
     });
   }
 
-  // 🔸 File explorer mock (for index.html)
-  const explorer = document.getElementById("file-explorer");
+  // 🔹 Signup handler
+  const signupButton = document.getElementById("signup-button");
+  if (signupButton) {
+    signupButton.addEventListener("click", () => {
+      const email = document.querySelector("#login-form input[type='email']").value;
+      const password = document.querySelector("#login-form input[type='password']").value;
 
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+          alert(`Account created for ${userCredential.user.email}`);
+        })
+        .catch(error => {
+          alert(`Signup failed: ${error.message}`);
+        });
+    });
+  }
+
+  // 🔹 Logout handler
+  const logoutButton = document.getElementById("logout-button");
+  if (logoutButton) {
+    logoutButton.addEventListener("click", () => {
+      auth.signOut()
+        .then(() => {
+          alert("Signed out");
+          location.reload();
+        })
+        .catch(error => {
+          alert(`Logout failed: ${error.message}`);
+        });
+    });
+  }
+
+  // 🔹 Show logged-in user
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      const loginArea = document.getElementById("login-area");
+      if (loginArea) {
+        loginArea.innerHTML = `<p>Welcome, ${user.email}</p>`;
+      }
+    }
+  });
+
+  // 🔹 File explorer mock
+  const explorer = document.getElementById("file-explorer");
   if (explorer) {
     const mockFiles = [
       { name: "FamilyPhoto.jpg", type: "image" },
