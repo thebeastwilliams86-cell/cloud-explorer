@@ -1,16 +1,12 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const explorer = document.getElementById("file-explorer");
+// Initialize Firebase using browser SDK
+const firebaseConfig = {
+  apiKey: "AIzaSyCKN-kgDd6cEfGAXBJSy1XpGZeMMtXIA8I",
+  authDomain: "cloud-explorer-dc32c.firebaseapp.com",
+  projectId: "cloud-explorer-dc32c",
+  storageBucket: "cloud-explorer-dc32c.firebasestorage.app",
+  messagingSenderId: "983734987467",
+  appId: "1:983734987467:web:e53a6597d5d07035b7c94e"
+};
 
-  const mockFiles = [
-    { name: "FamilyPhoto.jpg", type: "image" },
-    { name: "VacationVideo.mp4", type: "video" },
-    { name: "Document.pdf", type: "doc" }
-  ];
-
-  mockFiles.forEach(file => {
-    const item = document.createElement("div");
-    item.className = "file-item";
-    item.textContent = file.name;
-    explorer.appendChild(item);
-  });
-});
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
