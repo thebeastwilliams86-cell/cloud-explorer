@@ -3,13 +3,14 @@ const firebaseConfig = {
   apiKey: "AIzaSyCKN-kgDd6cEfGAXBJSy1XpGZeMMtXIA8I",
   authDomain: "cloud-explorer-dc32c.firebaseapp.com",
   projectId: "cloud-explorer-dc32c",
-  storageBucket: "cloud-explorer-dc32c.firebasestorage.app",
+  storageBucket: "cloud-explorer-dc32c.appspot.com",
   messagingSenderId: "983734987467",
   appId: "1:983734987467:web:e53a6597d5d07035b7c94e"
 };
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
+const storage = firebase.storage();
 
 document.addEventListener("DOMContentLoaded", () => {
   // 🔹 Login handler
@@ -64,28 +65,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🔹 Show logged-in user
   auth.onAuthStateChanged(user => {
-    if (user) {
-      const loginArea = document.getElementById("login-area");
-      if (loginArea) {
-        loginArea.innerHTML = `<p>Welcome, ${user.email}</p>`;
-      }
+    const loginArea = document.getElementById("login-area");
+    if (user && loginArea) {
+      loginArea.innerHTML = `<p>Welcome, ${user.email}</p>`;
+      loadUserFiles(user.uid);
     }
   });
 
-  // 🔹 File explorer mock
-  const explorer = document.getElementById("file-explorer");
-  if (explorer) {
-    const mockFiles = [
-      { name: "FamilyPhoto.jpg", type: "image" },
-      { name: "VacationVideo.mp4", type: "video" },
-      { name: "Document.pdf", type: "doc" }
-    ];
+  // 🔹 Upload handler
+  const fileInput = document.getElementById("file-input");
+  const uploadButton = document.getElementById("upload-button");
+  const uploadStatus = document.getElementById("upload-status");
 
-    mockFiles.forEach(file => {
-      const item = document.createElement("div");
-      item.className = "file-item";
-      item.textContent = file.name;
-      explorer.appendChild(item);
+  if (uploadButton && fileInput) {
+    uploadButton.addEventListener("click", () => {
+      const file = fileInput.files[0];
+      const user = auth.currentUser;
+
+      if (!user) {
+        alert("You must be logged in to upload.");
+        return;
+      }
+
+      if (!file) {
+        alert("Please select a file.");
+        return;
+      }
+
+      const userFileRef = storage.ref(`${user.uid}/${file.name}`);
+
+      userFileRef.put(file)
+        .then(snapshot => {
+          uploadStatus.textContent = `Uploaded: ${file.name}`;
+          loadUserFiles(user.uid); // Refresh file list
+        })
+        .catch(error => {
+          uploadStatus.textContent = `Upload failed: ${error.message}`;
+        });
     });
   }
+
+  // 🔹 Load user files
+  function loadUserFiles(uid) {
+    const explorer = document.getElementById("file-explorer");
+    if (!explorer) return;
+
+    explorer.innerHTML = "Loading files...";
+
+    storage.ref(uid).listAll()
+      .then(result => {
+        explorer.innerHTML = "";
+        result.items.forEach(itemRef => {
+          itemRef.getDownloadURL().then(url => {
+            const fileItem = document.createElement("div");
+            fileItem.className = "file-item";
+            fileItem.innerHTML = `<a href="${url}" target="_blank">${itemRef.name}</a>`;
+            explorer.appendChild(fileItem);
+          });
+        });
+      })
+      .catch(error => {
+        explorer.innerHTML = `Error loading files: ${error.message}`;
+      });
+  }
 });
+
