@@ -1,4 +1,4 @@
-// Firebase config
+// 🔹 Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyCKN-kgDd6cEfGAXBJSy1XpGZeMMtXIA8I",
   authDomain: "cloud-explorer-dc32c.firebaseapp.com",
@@ -8,12 +8,13 @@ const firebaseConfig = {
   appId: "1:983734987467:web:e53a6597d5d07035b7c94e"
 };
 
+// 🔹 Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const storage = firebase.storage();
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 🔹 Login handler
+  // 🔸 Login handler
   const loginForm = document.getElementById("login-form");
   if (loginForm) {
     loginForm.addEventListener("submit", (e) => {
@@ -31,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 🔹 Signup handler
+  // 🔸 Signup handler
   const signupButton = document.getElementById("signup-button");
   if (signupButton) {
     signupButton.addEventListener("click", () => {
@@ -48,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 🔹 Logout handler
+  // 🔸 Logout handler
   const logoutButton = document.getElementById("logout-button");
   if (logoutButton) {
     logoutButton.addEventListener("click", () => {
@@ -63,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 🔹 Show logged-in user
+  // 🔸 Show logged-in user and load files
   auth.onAuthStateChanged(user => {
     const loginArea = document.getElementById("login-area");
     if (user && loginArea) {
@@ -72,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 🔹 Upload handler
+  // 🔸 Upload handler
   const fileInput = document.getElementById("file-input");
   const uploadButton = document.getElementById("upload-button");
   const uploadStatus = document.getElementById("upload-status");
@@ -105,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // 🔹 Load user files
+  // 🔸 Load user files
   function loadUserFiles(uid) {
     const explorer = document.getElementById("file-explorer");
     if (!explorer) return;
@@ -129,4 +130,3 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   }
 });
-
