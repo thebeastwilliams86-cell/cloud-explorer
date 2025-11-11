@@ -10,6 +10,7 @@ body {
 h1, h2, h3 {
   text-align: center;
   color: #222;
+  margin-top: 2rem;
 }
 
 /* Form styling */
@@ -31,6 +32,8 @@ input[type="file"] {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  background-color: white;
+  cursor: pointer;
 }
 
 button {
@@ -65,31 +68,4 @@ button:hover {
 
 .file-item {
   background: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: center;
-  border-radius: 5px;
-  word-wrap: break-word;
-}
-
-.file-item a {
-  text-decoration: none;
-  color: #007bff;
-  font-weight: bold;
-}
-
-.file-item a:hover {
-  text-decoration: underline;
-}
-
-/* Responsive tweaks */
-@media (max-width: 600px) {
-  form, #file-explorer {
-    width: 100%;
-    padding: 10px;
-  }
-
-  #file-explorer {
-    grid-template-columns: 1fr;
-  }
-}
+  border
