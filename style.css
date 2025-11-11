@@ -1,15 +1,61 @@
+/* Base layout */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
   margin: 0;
   padding: 20px;
-}
-
-h1 {
-  text-align: center;
   color: #333;
 }
 
+h1, h2, h3 {
+  text-align: center;
+  color: #222;
+}
+
+/* Form styling */
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 16px;
+  margin: 8px 4px 0 0;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Upload section */
+#upload-status {
+  margin-top: 10px;
+  font-style: italic;
+  color: #555;
+}
+
+/* File explorer grid */
 #file-explorer {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -23,4 +69,27 @@ h1 {
   padding: 10px;
   text-align: center;
   border-radius: 5px;
+  word-wrap: break-word;
+}
+
+.file-item a {
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.file-item a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  form, #file-explorer {
+    width: 100%;
+    padding: 10px;
+  }
+
+  #file-explorer {
+    grid-template-columns: 1fr;
+  }
 }
