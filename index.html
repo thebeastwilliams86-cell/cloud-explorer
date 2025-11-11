@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
-<script src="script.js" defer></script>
   <meta charset="UTF-8">
   <title>Cloud Explorer</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js"></script>
+  <script src="script.js" defer></script>
 </head>
 <body>
-  <h1>Welcome to Cloud Explorer</h1>
+  <h2>Welcome to Cloud Explorer</h2>
+  <div id="login-area"></div>
+  <button id="logout-button">Logout</button>
 
-  <!-- Login area (optional for Firebase later) -->
-  <div id="login-area">
-    <!-- Placeholder for login form or greeting -->
-  </div>
+  <h3>Upload a File</h3>
+  <input type="file" id="file-input">
+  <button id="upload-button">Upload</button>
+  <div id="upload-status"></div>
 
-  <!-- File explorer grid -->
-  <div id="file-explorer">
-    <!-- Files will be injected by script.js -->
-  </div>
-
-  <script src="script.js"></script>
+  <h3>Your Files</h3>
+  <div id="file-explorer"></div>
 </body>
 </html>
 
